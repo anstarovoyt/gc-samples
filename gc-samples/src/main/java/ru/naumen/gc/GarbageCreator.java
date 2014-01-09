@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ *
+ * run: java -Xmx10g -verbose:gc -jar gc-samples-0.0.1-SNAPSHOT.jar
  * @author astarovoyt
  *
  */
@@ -11,7 +13,7 @@ public class GarbageCreator
 {
     private static final int COUNTER = 1000000000;
 
-    private static final int SIZE = 100000;
+    private static final int SIZE = 1000000;
 
     private static final Set<Object> set = new HashSet();
 
@@ -31,6 +33,9 @@ public class GarbageCreator
             }
         };
 
+        new Thread(runnable).start();
+        new Thread(runnable).start();
+        new Thread(runnable).start();
         new Thread(runnable).start();
         new Thread(runnable).start();
         new Thread(runnable).start();
