@@ -11,9 +11,9 @@ import java.util.Set;
  */
 public class GarbageCreator
 {
-    private static final int COUNTER = 1000000000;
-
-    private static final int SIZE = 1000000;
+    private static int THREAD_COUNT = 10;
+    private static int SIZE = 1000000;
+    private static int COUNTER = 1000000000;
 
     private static final Set<Object> set = new HashSet();
 
@@ -24,23 +24,38 @@ public class GarbageCreator
 
     public static void main(String... arg)
     {
+        if (arg != null)
+        {
+            if (arg.length > 0)
+            {
+                THREAD_COUNT = Integer.parseInt(arg[0]);
+            }
+
+            if (arg.length > 1)
+            {
+                SIZE = Integer.parseInt(arg[1]);
+            }
+
+            if (arg.length > 2)
+            {
+                COUNTER = Integer.parseInt(arg[1]);
+            }
+        }
+
         Runnable runnable = new Runnable()
         {
 
+            @Override
             public void run()
             {
                 GarbageCreator.run();
             }
         };
 
-        new Thread(runnable).start();
-        new Thread(runnable).start();
-        new Thread(runnable).start();
-        new Thread(runnable).start();
-        new Thread(runnable).start();
-        new Thread(runnable).start();
-        new Thread(runnable).start();
-        new Thread(runnable).start();
+        for (int i = 0; i < THREAD_COUNT; i++)
+        {
+            new Thread(runnable).start();
+        }
     }
 
     private static void run()
